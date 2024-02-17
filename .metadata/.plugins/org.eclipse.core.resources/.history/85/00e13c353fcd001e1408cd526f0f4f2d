@@ -1,0 +1,5 @@
+package com.examenpractico.exception;
+
+public class ResourceNotFoundException {
+
+}
