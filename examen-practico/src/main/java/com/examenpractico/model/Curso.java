@@ -2,6 +2,10 @@ package com.examenpractico.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -31,11 +35,15 @@ public class Curso {
 	
 	private String estado;
 	
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fechaCreacion;
 	
 	@ManyToOne(fetch = FetchType.LAZY,optional = false)
 	@JoinColumn(name = "id_usuario" )
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private Usuario usuario;
+	
+	
 
 	public long getId() {
 		return id;

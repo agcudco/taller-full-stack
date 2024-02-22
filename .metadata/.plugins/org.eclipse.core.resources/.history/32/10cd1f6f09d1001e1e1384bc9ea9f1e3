@@ -1,0 +1,37 @@
+package com.examenpractico.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.examenpractico.model.Curso;
+import com.examenpractico.repository.CursoRepository;
+import com.examenpractico.repository.UsuarioRepository;
+
+@RestController
+@RequestMapping("/cursos")
+public class CursoController {
+
+	@Autowired
+	private CursoRepository cursoRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
+	
+	@GetMapping("/")
+	public List<Curso> listarCursos(){
+		return cursoRepository.findAll();
+	}
+	
+	@PostMapping("/")
+	public Curso registrarCurso(@RequestBody Curso curso) {
+		return cursoRepository.save(curso);
+	}
+	
+	
+}
