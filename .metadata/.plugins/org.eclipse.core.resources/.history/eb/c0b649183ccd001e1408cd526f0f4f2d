@@ -1,5 +1,0 @@
-package com.examenpractico.repository;
-
-public interface UsuarioRepository {
-
-}

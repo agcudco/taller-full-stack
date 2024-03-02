@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import UsuarioServices from '../services/UsuarioServices';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 export const AddEstudianteComponent = () => {
 
@@ -13,15 +13,47 @@ export const AddEstudianteComponent = () => {
 
     const navigate = useNavigate();
 
+    const {id} = useParams();
+
     const createEstudiante = (e)=>{
         e.preventDefault();
         const estudiante = {nombre,apellido,email,passwd,estado,fechaCreacion};
-        UsuarioServices.create(estudiante).then((response)=>{
-            console.log(response.data);
-            navigate('/estudiantes');
+        if(id){
+            UsuarioServices.updateEstudiante(id,estudiante).then((response)=>{
+                console.log(response.data);
+                navigate('/estudiantes');
+            }).catch(error=>{
+                console.log(error);
+            })            
+        }else{
+            UsuarioServices.create(estudiante).then((response)=>{
+                console.log(response.data);
+                navigate('/estudiantes');
+            }).catch(error=>{
+                console.log(error);
+            })
+        }        
+    }
+
+    useEffect(()=>{
+        UsuarioServices.getEstudianteById(id).then((response)=>{
+            setNombre(response.data.nombre);
+            setApellido(response.data.apellido);
+            setEmail(response.data.email);
+            setEstado(response.data.estado);
+            setFechaCreacion(response.data.fechaCreacion);
+            setPasswd(response.data.passwd);
         }).catch(error=>{
             console.log(error);
         })
+    },[])
+
+    const title=()=>{
+        if(id){
+            return <h2 className='text-center'>Actualizar Datos</h2>
+        }else{
+            return <h2 className='text-center'>Nuevo estudiante</h2>
+        }
     }
 
   return (
@@ -29,9 +61,13 @@ export const AddEstudianteComponent = () => {
         <div className='container'>
             <div className='row'>
                 <div className='card col-md-6 offset-md-3 offset-md-3'>
-                    <h2 className='text-center'>Registrar</h2>
+                    
+                    <h2 className='text-center'>
+                        {
+                            title()
+                        }
+                    </h2>
                 
-
                     <div className='card-body'>
                         <form>
                             <div className='form-group mb-2'>

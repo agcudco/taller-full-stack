@@ -19,6 +19,14 @@ export const ListEstudianteComponent = () => {
         })
     }
 
+    const deleteEstudiante = (estudianteId)=>{
+        UsuarioServices.deleteEstudiante(estudianteId).then((response)=>{
+            listarTodos();
+        }).catch(error=>{
+            console.log(error);
+        })
+    }
+
 
   return (
     <div className='container'>
@@ -33,6 +41,7 @@ export const ListEstudianteComponent = () => {
                 <th>Email</th>
                 <th>Estado</th>
                 <th>Fecha de Creacion</th>
+                <th>Acciones</th>
             </thead>
             <tbody>
                 {
@@ -45,6 +54,10 @@ export const ListEstudianteComponent = () => {
                             <td>{estudiante.email}</td>
                             <td>{estudiante.estado}</td>
                             <td>{estudiante.fechaCreacion}</td>
+                            <td>
+                                <Link className='btn btn-info' to={`/edit-estudiantes/${estudiante.id}`}>Actualizar</Link>
+                                <button className='btn btn-danger' onClick={()=>deleteEstudiante(estudiante.id)}>Eliminar</button>
+                            </td>
                         </tr>
                     )
                 }

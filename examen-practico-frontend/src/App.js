@@ -16,6 +16,7 @@ function App() {
                     <Route exact path='/' element={<ListEstudianteComponent/>}></Route>
                     <Route path='/estudiantes' element={<ListEstudianteComponent/>}></Route>
                     <Route path='/add-estudiantes' element={<AddEstudianteComponent/>}></Route>
+                    <Route path='/edit-estudiantes/:id' element={<AddEstudianteComponent/>}></Route>
                 </Routes>
             </div>
             <FooterComponent/>
